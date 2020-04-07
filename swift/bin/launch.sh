@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 service rsyslog start
 service rsync start
@@ -28,9 +28,12 @@ else
     openstack endpoint create --region RegionOne object-store admin http://127.0.0.1:8080/v1
     openstack endpoint create --region RegionOne object-store public ${KS_SWIFT_PUBLIC_URL}/v1/KEY_%\(tenant_id\)s
 
-    echo "Stopping apache."
+    echo "Stopping apache..."
     apachectl stop
-    echo "Apache stopped."
+    wait_seconds=10
+    pid_file="/var/run/apache2/apache2.pid"
+    until test $((wait_seconds--)) -eq 0 -o ! -f "$pid_file" ; do sleep 1; done
+    echo "Apache is stopped."
 
     echo "$KS_SWIFT_PUBLIC_URL" > /opt/SWIFT_INIT
 fi
