@@ -42,7 +42,7 @@ Starting with openstack queens, the deprecated Identity v2 was removed. Since so
 
 I start the container using the following command: 
 
-    docker run -d --rm  -p 5000 -p 35357 -p 8080 --env KS_SWIFT_PUBLIC_URL=http://127.0.0.1:8080 --name keystone jeantil/openstack-keystone-swift:pike
+    docker run -d --rm  -p 5000 -p 35357 -p 8080 --env KS_SWIFT_PUBLIC_URL=http://127.0.0.1:8080 --name keystone romnikit/openstack-keystone-swift
 
 The KS_SWIFT_PUBLIC_URL needs to match the host port that container port 8080 is mapped to. Because keystone returns the endpoint url 
 in the authentication response, it has to know where the client expects to connect.
@@ -52,7 +52,7 @@ variable.
 For example, to run on host port 8089 you would use the following docker run command: 
 
 ```
-docker run -d --rm  -p 5000 -p 35357 -p 8089:8080 --env KS_SWIFT_PUBLIC_URL=http://127.0.0.1:8089 --name keystone jeantil/openstack-keystone-swift:pike
+docker run -d --rm  -p 5000 -p 35357 -p 8089:8080 --env KS_SWIFT_PUBLIC_URL=http://127.0.0.1:8089 --name keystone romnikit/openstack-keystone-swift
 ```
 
 Once this is done you can use one of the preconfigured credentials to authenticate against the container.
@@ -65,6 +65,14 @@ For convenience, the following commands are available in the container :
 - http (from https://httpie.org)
 - jq (from https://stedolan.github.io/jq/)
 
+== Using with docker-composer
+
+Please take ./docker-compose.yml from the repository as an example.
+The following command is expected to start Swift container in local setup:
+
+```
+docker-compose up swift
+```
 
 == Preconfigured credentials
 

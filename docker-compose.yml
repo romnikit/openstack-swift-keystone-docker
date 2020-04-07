@@ -1,0 +1,12 @@
+version: '2'
+
+services:
+  swift:
+    image: "romnikit/openstack-keystone-swift"
+    environment:
+      KS_SWIFT_PUBLIC_URL: 'http://127.0.0.1:8086'
+    ports:
+      - '5000:5000'
+      - '8086:8080'
+      - '35357:35357'
+    mem_limit: 512m
