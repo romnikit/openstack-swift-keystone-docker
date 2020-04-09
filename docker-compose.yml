@@ -7,6 +7,6 @@ services:
       KS_SWIFT_PUBLIC_URL: 'http://127.0.0.1:8086'
     ports:
       - '5000:5000'
-      - '8086:8080'
+      - '8086:8086'
       - '35357:35357'
     mem_limit: 512m

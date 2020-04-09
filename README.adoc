@@ -42,9 +42,9 @@ Starting with openstack queens, the deprecated Identity v2 was removed. Since so
 
 I start the container using the following command: 
 
-    docker run -d --rm  -p 5000 -p 35357 -p 8080 --env KS_SWIFT_PUBLIC_URL=http://127.0.0.1:8080 --name keystone romnikit/openstack-keystone-swift
+    docker run -d --rm  -p 5000 -p 35357 -p 8086 --env KS_SWIFT_PUBLIC_URL=http://127.0.0.1:8086 --name keystone romnikit/openstack-keystone-swift
 
-The KS_SWIFT_PUBLIC_URL needs to match the host port that container port 8080 is mapped to. Because keystone returns the endpoint url 
+The KS_SWIFT_PUBLIC_URL needs to match the host port that container port 8086 is mapped to. Because keystone returns the endpoint url
 in the authentication response, it has to know where the client expects to connect.
 
 If you need to customize the port that the swift endpoint is using, you must change the port mapping and the KS_SWIFT_PUBLIC_URL environment
@@ -52,7 +52,7 @@ variable.
 For example, to run on host port 8089 you would use the following docker run command: 
 
 ```
-docker run -d --rm  -p 5000 -p 35357 -p 8089:8080 --env KS_SWIFT_PUBLIC_URL=http://127.0.0.1:8089 --name keystone romnikit/openstack-keystone-swift
+docker run -d --rm  -p 5000 -p 35357 -p 8086 --env KS_SWIFT_PUBLIC_URL=http://127.0.0.1:8086 --name keystone romnikit/openstack-keystone-swift
 ```
 
 Once this is done you can use one of the preconfigured credentials to authenticate against the container.
@@ -138,9 +138,9 @@ USERNAME=demo
 PASSWORD=demo
 TENANT_NAME=test
 ```
-=== Swift tempAuth accounts 
+=== Swift tempAuth accounts
 
-Default endpoint http://127.0.0.1:8080/auth/v1.0
+Default endpoint http://127.0.0.1:8086/auth/v1.0
 
 ==== Admin account
 ```
@@ -183,7 +183,7 @@ echo '{"auth":{"identity":{"methods":["password"],"password":{"user":{"name":"de
 echo '{"auth": {"passwordCredentials": {"username": "demo","password": "demo"},"tenantName": "test"}}' | http POST :35357/v2.0/tokens 
 
 # TempAuth
-http http://127.0.0.1:8080/auth/v1.0 X-Storage-User:test:tester X-Storage-Pass:testing 
+http http://127.0.0.1:8086/auth/v1.0 X-Storage-User:test:tester X-Storage-Pass:testing
 ```
 
 == Sample curl commands
@@ -196,5 +196,5 @@ curl -X POST -H 'Content-Type: application/json' -d '{"auth":{"identity":{"metho
 curl -X POST -H 'Content-Type: application/json' -d '{"auth": {"passwordCredentials": {"username": "demo","password": "demo"},"tenantName": "test"}}' http://127.0.0.1:35357/v2.0/tokens
 
 # TempAuth
-curl -H 'X-Storage-User: test:tester' -H 'X-Storage-Pass: testing' http://127.0.0.1:8080/auth/v1.0
+curl -H 'X-Storage-User: test:tester' -H 'X-Storage-Pass: testing' http://127.0.0.1:8086/auth/v1.0
 ```
